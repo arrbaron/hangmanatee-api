@@ -5,7 +5,6 @@ const router = express.Router();
 
 router.use(bodyParser.json());
 
-// get a game
 router.post("/login", (req, res) => {
   res.json({msg: "logging in"});
 });

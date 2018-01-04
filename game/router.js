@@ -5,7 +5,6 @@ const router = express.Router();
 
 router.use(bodyParser.json());
 
-// get a game
 router.get("/", (req, res) => {
   res.json({msg: "getting game"});
 });
