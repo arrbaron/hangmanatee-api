@@ -1,4 +1,11 @@
 language: node_js
 node_js: node
 services:
-    - mongodb
+- mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: husp6Y/HelNMGEhO0zeZCaHmhQROrYMKiBvBDfjf+PTJWT5Nvxxj4NA+7F/aFDiYETfmxchWNbnm1BOYX+f4wB4leAvq9Iu5tIObUO7d5emJtH/qHNGWIETlTSQ936Zt+gRL5lOBq+gCVTUfhe4Y//PURItjhgmp4dVyYdVUIGIojoxo6wOcloNNoDDsNalKXOH+NZxCFrFFZkk4PuFCrAADyWjuhJ27XD6u4NtxrpT5YqVMyKymDGjeOsnuXMCKj1kFarPVsiacPPoKO9njJuk/PJma8O/HhprfcifAzIBtBgPlcS+3shqYSeKINszQsSrYWVo1CDi9fpud1tqOakkyIuTJveXRk0MQiZCUSl5PBopGh1xWP1huTtcxtMAhoWR1woJnJeL1CIbmBqauC8GcVAcO+K5ABQu6NvCuSEDeXMXzFQdZt+A9PfgTDl4Q8VC8BVgi+H6HJ2LAXE91NtjYFu3panLY/IEplP41vChtUShyFbOdUEaegV03v5xwgfeditUXxJyXX7+X4bku3W/JPR6msrLzxYQkZ8GIn4Ti3KnJj7bZ1nvMbs7v7ceqoEOJl2GuTpyLtfcJn2qHpVmN3xmGjsIGZ6DXLrRO6WcwzqvHR9DB9/LqAhNXWVafHsGlFlXrF8HcEnBQ8NriIbW5HPrrrlu0JbXtPssdMms=
+  app: mysterious-island-81551
+  on:
+    repo: soundofsilence75/hangmanatee-api
