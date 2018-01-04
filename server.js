@@ -3,6 +3,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const { router: gameRouter } = require("./game/router");
+const { router: wordSetRouter } = require("./wordSet/router");
+const { router: cardRouter } = require("./card/router");
+const { router: authRouter } = require("./auth/router");
 const { PORT, DATABASE_URL } = require("./config");
 
 const app = express();
@@ -20,10 +24,43 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get("/api/*", (req, res) => {
+app.get("/api/", (req, res) => {
   res.json({ok: true});
 });
 
-app.listen(PORT, () => console.log("Listening on port " + PORT));
+app.use("/api/game/", gameRouter);
+app.use("/api/wordset", wordSetRouter);
+app.use("/api/wordset/cards", cardRouter);
+app.use("/api/auth", authRouter);
 
-module.exports = {app};
+let server;
+
+function runServer() {
+  return new Promise((resolve, reject) => {
+    server = app.listen(PORT, () => {
+      console.log(`Your app is listening on port ${PORT}`);
+      resolve(server);
+    }).on('error', err => {
+      reject(err)
+    });
+  });
+}
+
+function closeServer() {
+  return new Promise((resolve, reject) => {
+    console.log('Closing server');
+    server.close(err => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve();
+    });
+  });
+}
+
+if (require.main === module) {
+  runServer().catch(err => console.error(err));
+};
+
+module.exports = { app, runServer, closeServer };
