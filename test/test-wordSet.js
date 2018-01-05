@@ -17,7 +17,7 @@ describe("Word set", function() {
   
   it("should get 200 on GET requests", function() {
     return chai.request(app)
-      .get("/api/wordset/")
+      .get("/api/wordset/foo")
       .then(function(res) {
         res.should.have.status(200);
         res.should.be.json;

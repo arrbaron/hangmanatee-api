@@ -17,7 +17,7 @@ describe("Card", function() {
   
   it("should get 200 on GET requests", function() {
     return chai.request(app)
-      .get("/api/wordset/cards")
+      .get("/api/wordset/foo/cards")
       .then(function(res) {
         res.should.have.status(200);
         res.should.be.json;
@@ -26,7 +26,7 @@ describe("Card", function() {
 
   it("should get 200 on GET requests", function() {
     return chai.request(app)
-      .get("/api/wordset/cards/foo")
+      .get("/api/wordset/foo/cards/bar")
       .then(function(res) {
         res.should.have.status(200);
         res.should.be.json;
@@ -35,7 +35,7 @@ describe("Card", function() {
 
   it("should get 200 on POST requests", function() {
     return chai.request(app)
-      .post("/api/wordset/cards")
+      .post("/api/wordset/foo/cards")
       .then(function(res) {
         res.should.have.status(200);
         res.should.be.json;
@@ -44,7 +44,7 @@ describe("Card", function() {
   
   it("should get 200 on PUT requests", function () {
     return chai.request(app)
-      .put("/api/wordset/cards/foo")
+      .put("/api/wordset/foo/cards/bar")
       .then(function(res) {
         res.should.have.status(200);
         res.should.be.json;
@@ -53,7 +53,7 @@ describe("Card", function() {
   
   it("should get 200 on DELETE requests", function () {
     return chai.request(app)
-      .delete("/api/wordset/cards/foo")
+      .delete("/api/wordset/foo/cards/bar")
       .then(function(res) {
         res.should.have.status(200);
         res.should.be.json;
