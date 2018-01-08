@@ -28,6 +28,7 @@ app.get("/api/", (req, res) => {
 
 app.use("/api/wordset/", wordSetRouter);
 app.use("/api/auth/", authRouter);
+mongoose.connect(DATABASE_URL);
 
 let server;
 
