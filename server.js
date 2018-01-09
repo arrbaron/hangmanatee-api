@@ -2,9 +2,15 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const passport = require("passport");
 const morgan = require("morgan");
 const { router: wordSetRouter } = require("./wordSet/router");
+const { router: userRouter } = require("./user/router");
 const { router: authRouter } = require("./auth/router");
+const { localStrategy, jwtStrategy } = require("./auth/strategies");
+
+mongoose.Promise = global.Promise;
+
 const { PORT, DATABASE_URL } = require("./config");
 
 const app = express();
@@ -22,13 +28,26 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get("/api/", (req, res) => {
-  res.json({ok: true});
-});
+console.log(passport);
+passport.use(localStrategy);
+passport.use(jwtStrategy);
 
 app.use("/api/wordset/", wordSetRouter);
 app.use("/api/auth/", authRouter);
+app.use("/api/user/", userRouter);
 mongoose.connect(DATABASE_URL);
+
+const jwtAuth = passport.authenticate('jwt', { session: false });
+
+app.get('/api/protected', jwtAuth, (req, res) => {
+  return res.json({
+    data: 'rosebud'
+  });
+});
+
+app.get("/api/", (req, res) => {
+  res.json({ok: true});
+});
 
 let server;
 
