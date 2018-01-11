@@ -87,6 +87,7 @@ router.put("/:owner/:wordSetID", (req, res) => {
   console.log({msg: "updating word set"});
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
+    console.log("wordSet.title =>" + req.body.title)
     wordSet.title = req.body.title;
     wordSet.save((err, updatedWordSet) => {
       if (err) return console.log(err);
