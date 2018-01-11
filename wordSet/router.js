@@ -8,16 +8,16 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 // GET
-router.get("/", (req, res) => {
+router.get("/:owner", (req, res) => {
   console.log("getting ALL word sets");
-  WordSet.find((err, wordSets) => {
+  WordSet.find({ owner: req.params.owner }, (err, wordSets) => {
     if (err) return console.error(err);
     res.json(wordSets);
-    return wordSets;
+    // return wordSets;
   });
 });
 
-router.get("/:wordSetID", (req, res) => {
+router.get("/:owner/:wordSetID", (req, res) => {
   console.log("getting word set");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.error(err);
@@ -26,7 +26,7 @@ router.get("/:wordSetID", (req, res) => {
   });
 });
 
-router.get("/:wordSetID/cards", (req, res) => {
+router.get("/:owner/:wordSetID/cards", (req, res) => {
   console.log("getting cards");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
@@ -35,7 +35,7 @@ router.get("/:wordSetID/cards", (req, res) => {
   });
 });
 
-router.get("/:wordSetID/cards/:cardID", (req, res) => {
+router.get("/:owner/:wordSetID/cards/:cardID", (req, res) => {
   console.log("getting specific card");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
@@ -46,21 +46,24 @@ router.get("/:wordSetID/cards/:cardID", (req, res) => {
 });
 
 // POST
-router.post("/", (req, res) => {
+router.post("/:owner/", (req, res) => {
   console.log("adding wordset");
-  res.send("created wordset");
-  return WordSet.create({
+  // res.send("created wordset");
+  WordSet.create({
     title: "new test",
     cards: {
       term: "term",
       definition: "definition"
-    }
-  });
+    },
+    owner: req.params.owner
+  })
+  .then(wordSet => res.json(wordSet))
+  .catch(err => console.log(err));
 });
 
-router.post("/:wordSetID/cards", (req, res) => {
+router.post("/:owner/:wordSetID/cards", (req, res) => {
   console.log("adding card");
-  res.send("created new card");
+  // res.send("created new card");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
     wordSet.cards.push({term: "pequito", definition: "small"});
@@ -73,7 +76,7 @@ router.post("/:wordSetID/cards", (req, res) => {
 });
 
 // PUT
-router.put("/:wordSetID", (req, res) => {
+router.put("/:owner/:wordSetID", (req, res) => {
   console.log({msg: "updating word set"});
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
@@ -85,7 +88,7 @@ router.put("/:wordSetID", (req, res) => {
   });
 });
 
-router.put("/:wordSetID/cards/:cardID", (req, res) => {
+router.put("/:owner/:wordSetID/cards/:cardID", (req, res) => {
   console.log("updating card");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
@@ -101,7 +104,7 @@ router.put("/:wordSetID/cards/:cardID", (req, res) => {
 });
 
 // DELETE
-router.delete("/:wordSetID", (req, res) => {
+router.delete("/:owner/:wordSetID", (req, res) => {
   console.log({msg: "deleting word set"});
   WordSet.findByIdAndRemove(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
@@ -110,7 +113,7 @@ router.delete("/:wordSetID", (req, res) => {
   });
 });
 
-router.delete("/:wordSetID/cards/:cardID", (req, res) => {
+router.delete("/:owner/:wordSetID/cards/:cardID", (req, res) => {
   console.log("deleting card");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
