@@ -13,7 +13,14 @@ router.get("/:owner", (req, res) => {
   WordSet.find({ owner: req.params.owner }, (err, wordSets) => {
     if (err) return console.error(err);
     res.json(wordSets);
-    // return wordSets;
+  });
+});
+
+router.get("/:owner/last", (req, res) => {
+  console.log("getting last word set from user");
+  WordSet.find({ owner: req.params.owner }, (err, wordSets) => {
+    if (err) return console.error(err);
+    res.json(wordSets[wordSets.length -1]);
   });
 });
 
