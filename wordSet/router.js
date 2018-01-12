@@ -73,7 +73,7 @@ router.post("/:owner/:wordSetID/cards", (req, res) => {
   // res.send("created new card");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
-    wordSet.cards.push({term: "pequito", definition: "small"});
+    wordSet.cards.push({term: "term", definition: "definition", showEdit: false});
     wordSet.save((err, updatedWordSet) => {
       if (err) return console.log(err);
       res.send(updatedWordSet);

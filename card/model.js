@@ -4,7 +4,8 @@ mongoose.Promise = global.Promise;
 
 const CardSchema = mongoose.Schema({
   term: String,
-  definition: String
+  definition: String,
+  showEdit: Boolean
 });
 
 const Card = mongoose.model("Card", CardSchema);
