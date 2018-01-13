@@ -8,7 +8,7 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 // GET
-router.get("/:owner", (req, res) => {
+router.get("/:owner/all", (req, res) => {
   console.log("getting ALL word sets");
   WordSet.find({ owner: req.params.owner }, (err, wordSets) => {
     if (err) return console.error(err);
@@ -24,7 +24,7 @@ router.get("/:owner/last", (req, res) => {
   });
 });
 
-router.get("/:owner/:wordSetID", (req, res) => {
+router.get("/:wordSetID", (req, res) => {
   console.log("getting word set");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.error(err);
@@ -33,7 +33,7 @@ router.get("/:owner/:wordSetID", (req, res) => {
   });
 });
 
-router.get("/:owner/:wordSetID/cards", (req, res) => {
+router.get("/:wordSetID/cards", (req, res) => {
   console.log("getting cards");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
@@ -42,7 +42,7 @@ router.get("/:owner/:wordSetID/cards", (req, res) => {
   });
 });
 
-router.get("/:owner/:wordSetID/cards/:cardID", (req, res) => {
+router.get("/:wordSetID/cards/:cardID", (req, res) => {
   console.log("getting specific card");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
@@ -60,7 +60,9 @@ router.post("/:owner/", (req, res) => {
     title: "new test",
     cards: {
       term: "term",
-      definition: "definition"
+      definition: "definition",
+      showEdit: false,
+      showTerm: true
     },
     owner: req.params.owner
   })
@@ -68,22 +70,22 @@ router.post("/:owner/", (req, res) => {
   .catch(err => console.log(err));
 });
 
-router.post("/:owner/:wordSetID/cards", (req, res) => {
+router.post("/:wordSetID/cards", (req, res) => {
   console.log("adding card");
   // res.send("created new card");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
-    wordSet.cards.push({term: "term", definition: "definition", showEdit: false});
+    wordSet.cards.push({term: "term", definition: "definition", showEdit: false, showTerm: true});
     wordSet.save((err, updatedWordSet) => {
       if (err) return console.log(err);
-      res.send(updatedWordSet);
-      return updatedWordSet;
+      // return the newest card
+      res.send(updatedWordSet.cards[updatedWordSet.cards.length - 1]);
     });
   });
 });
 
 // PUT
-router.put("/:owner/:wordSetID", (req, res) => {
+router.put("/:wordSetID", (req, res) => {
   console.log({msg: "updating word set"});
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
@@ -96,14 +98,14 @@ router.put("/:owner/:wordSetID", (req, res) => {
   });
 });
 
-router.put("/:owner/:wordSetID/cards/:cardID", (req, res) => {
+router.put("/:wordSetID/cards/:cardID", (req, res) => {
   console.log("updating card");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
     // TODO - validate this
     updatedCard = wordSet.cards.id(req.params.cardID);
-    updatedCard.term = req.body.term;
-    updatedCard.definition = req.body.definition;
+    if (req.body.term) updatedCard.term = req.body.term;
+    if (req.body.definition) updatedCard.definition = req.body.definition;
     wordSet.save(err => {
       if (err) return console.log(err);
       res.send(updatedCard);
@@ -112,7 +114,7 @@ router.put("/:owner/:wordSetID/cards/:cardID", (req, res) => {
 });
 
 // DELETE
-router.delete("/:owner/:wordSetID", (req, res) => {
+router.delete("/:wordSetID", (req, res) => {
   console.log({msg: "deleting word set"});
   WordSet.findByIdAndRemove(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
@@ -121,7 +123,7 @@ router.delete("/:owner/:wordSetID", (req, res) => {
   });
 });
 
-router.delete("/:owner/:wordSetID/cards/:cardID", (req, res) => {
+router.delete("/:wordSetID/cards/:cardID", (req, res) => {
   console.log("deleting card");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
