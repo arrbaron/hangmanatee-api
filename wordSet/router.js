@@ -1,11 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const passport = require("passport");
 const { WordSet } = require("./model");
 const { Card } = require("../card/model");
 
 const router = express.Router();
 
 router.use(bodyParser.json());
+
+const jwtAuth = passport.authenticate('jwt', { session: false });
 
 // GET
 router.get("/:owner/all", (req, res) => {
@@ -53,7 +56,7 @@ router.get("/:wordSetID/cards/:cardID", (req, res) => {
 });
 
 // POST
-router.post("/:owner/", (req, res) => {
+router.post("/:owner/", jwtAuth, (req, res) => {
   console.log("adding wordset");
   // res.send("created wordset");
   WordSet.create({
@@ -70,7 +73,7 @@ router.post("/:owner/", (req, res) => {
   .catch(err => console.log(err));
 });
 
-router.post("/:wordSetID/cards", (req, res) => {
+router.post("/:wordSetID/cards", jwtAuth, (req, res) => {
   console.log("adding card");
   // res.send("created new card");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
@@ -85,7 +88,7 @@ router.post("/:wordSetID/cards", (req, res) => {
 });
 
 // PUT
-router.put("/:wordSetID", (req, res) => {
+router.put("/:wordSetID", jwtAuth, (req, res) => {
   console.log({msg: "updating word set"});
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
@@ -98,7 +101,7 @@ router.put("/:wordSetID", (req, res) => {
   });
 });
 
-router.put("/:wordSetID/cards/:cardID", (req, res) => {
+router.put("/:wordSetID/cards/:cardID", jwtAuth, (req, res) => {
   console.log("updating card");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
@@ -114,7 +117,7 @@ router.put("/:wordSetID/cards/:cardID", (req, res) => {
 });
 
 // DELETE
-router.delete("/:wordSetID", (req, res) => {
+router.delete("/:wordSetID", jwtAuth, (req, res) => {
   console.log({msg: "deleting word set"});
   WordSet.findByIdAndRemove(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
@@ -123,7 +126,7 @@ router.delete("/:wordSetID", (req, res) => {
   });
 });
 
-router.delete("/:wordSetID/cards/:cardID", (req, res) => {
+router.delete("/:wordSetID/cards/:cardID", jwtAuth, (req, res) => {
   console.log("deleting card");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
