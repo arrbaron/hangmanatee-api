@@ -1,4 +1,5 @@
 require("dotenv").config();
+const { CLIENT_ORIGIN } = require("./config");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
