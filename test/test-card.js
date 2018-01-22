@@ -1,62 +1,62 @@
-const chai = require("chai");
-const chaiHttp = require("chai-http");
+// const chai = require("chai");
+// const chaiHttp = require("chai-http");
 
-const { app, runServer, closeServer } = require("../server");
+// const { app, runServer, closeServer } = require("../server");
 
-const should = chai.should();
-chai.use(chaiHttp);
+// const should = chai.should();
+// chai.use(chaiHttp);
 
-describe("Card", function() {
-  before(function() {
-    return runServer();
-  });
+// describe("Card", function() {
+//   before(function() {
+//     return runServer();
+//   });
 
-  after(function() {
-    return closeServer();
-  });
+//   after(function() {
+//     return closeServer();
+//   });
   
-  it("should get 200 on GET requests", function() {
-    return chai.request(app)
-      .get("/api/wordset/foo/cards")
-      .then(function(res) {
-        res.should.have.status(200);
-        res.should.be.json;
-      });
-  });
+//   it("should get 200 on GET requests", function() {
+//     return chai.request(app)
+//       .get("/api/wordset/foo/cards")
+//       .then(function(res) {
+//         res.should.have.status(200);
+//         res.should.be.json;
+//       });
+//   });
 
-  it("should get 200 on GET requests", function() {
-    return chai.request(app)
-      .get("/api/wordset/foo/cards/bar")
-      .then(function(res) {
-        res.should.have.status(200);
-        res.should.be.json;
-      });
-  });
+//   it("should get 200 on GET requests", function() {
+//     return chai.request(app)
+//       .get("/api/wordset/foo/cards/bar")
+//       .then(function(res) {
+//         res.should.have.status(200);
+//         res.should.be.json;
+//       });
+//   });
 
-  it("should get 200 on POST requests", function() {
-    return chai.request(app)
-      .post("/api/wordset/foo/cards")
-      .then(function(res) {
-        res.should.have.status(200);
-        res.should.be.json;
-      });
-  });
+//   it("should get 200 on POST requests", function() {
+//     return chai.request(app)
+//       .post("/api/wordset/foo/cards")
+//       .then(function(res) {
+//         res.should.have.status(200);
+//         res.should.be.json;
+//       });
+//   });
   
-  it("should get 200 on PUT requests", function () {
-    return chai.request(app)
-      .put("/api/wordset/foo/cards/bar")
-      .then(function(res) {
-        res.should.have.status(200);
-        res.should.be.json;
-      });
-  });
+//   it("should get 200 on PUT requests", function () {
+//     return chai.request(app)
+//       .put("/api/wordset/foo/cards/bar")
+//       .then(function(res) {
+//         res.should.have.status(200);
+//         res.should.be.json;
+//       });
+//   });
   
-  it("should get 200 on DELETE requests", function () {
-    return chai.request(app)
-      .delete("/api/wordset/foo/cards/bar")
-      .then(function(res) {
-        res.should.have.status(200);
-        res.should.be.json;
-      });
-  });
-});
+//   it("should get 200 on DELETE requests", function () {
+//     return chai.request(app)
+//       .delete("/api/wordset/foo/cards/bar")
+//       .then(function(res) {
+//         res.should.have.status(200);
+//         res.should.be.json;
+//       });
+//   });
+// });
