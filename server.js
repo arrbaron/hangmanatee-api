@@ -1,5 +1,4 @@
 require("dotenv").config();
-const { CLIENT_ORIGIN } = require("./config");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -13,7 +12,7 @@ const { localStrategy, jwtStrategy } = require("./auth/strategies");
 
 mongoose.Promise = global.Promise;
 
-const { PORT, DATABASE_URL } = require("./config");
+const { PORT, DATABASE_URL, CLIENT_ORIGIN } = require("./config");
 
 const app = express();
 
