@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const morgan = require("morgan");
+const cors = require('cors');
 const { router: wordSetRouter } = require("./wordSet/router");
 const { router: userRouter } = require("./user/router");
 const { router: authRouter } = require("./auth/router");
@@ -17,15 +18,11 @@ const app = express();
 
 app.use(morgan("common"));
 
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Content-Type,Authorization");
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
-  if (req.method === 'OPTIONS') {
-    return res.send(204);
-  }
-  next();
-});
+app.use(
+  cors({
+    origin: CLIENT_ORIGIN
+  })
+);
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
