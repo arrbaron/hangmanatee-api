@@ -62,8 +62,8 @@ router.post("/:owner/", jwtAuth, (req, res) => {
   WordSet.create({
     title: "new test",
     cards: {
-      term: "term",
-      definition: "definition",
+      term: "ClickToEditMe",
+      definition: "click to enter your definition",
       showEdit: false,
       showTerm: true
     },
@@ -78,7 +78,7 @@ router.post("/:wordSetID/cards", jwtAuth, (req, res) => {
   // res.send("created new card");
   WordSet.findById(req.params.wordSetID, (err, wordSet) => {
     if (err) return console.log(err);
-    wordSet.cards.push({term: "term", definition: "definition", showEdit: false, showTerm: true});
+    wordSet.cards.push({term: "ClickToEditMe", definition: "click to enter your definition", showEdit: false, showTerm: true});
     wordSet.save((err, updatedWordSet) => {
       if (err) return console.log(err);
       // return the newest card
