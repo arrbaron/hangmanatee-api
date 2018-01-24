@@ -5,7 +5,7 @@ Backend API for [Hangmanateacher](https://github.com/soundofsilence75/hangmanate
 ## Technologies Used
 
 * Node/Express
-* MongoDB
+* MongoDB/Mongoose
 * Jest/Enzyme
 * Travis CI
 * Passport/JWT
